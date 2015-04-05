@@ -57,7 +57,7 @@ var MainContainer = Container.template(function($) {
 MainContainer.behaviors = new Array(1);
 MainContainer.behaviors[0] = Behavior.template({
 	onAnalogValueChanged: function(content,result) {
-    	washerTime = result.x.toFixed(2);
+    	/*washerTime = result.x.toFixed(2);
     	if (washerTime < 15) {
     		sensor.skin = redS;
 			content.string = "Food is low..."
@@ -71,7 +71,7 @@ MainContainer.behaviors[0] = Behavior.template({
     		sensor.skin = greenS;
 		}
     	washerInUse = result.y.toFixed(2);
-    	dryerTime = result.y;
+    	dryerTime = result.y;*/
 	},
 })
 /* Create message for communication with hardware pins.
@@ -80,25 +80,39 @@ MainContainer.behaviors[0] = Behavior.template({
    pins: initializes 'analogTemp' (matches 'analogTemp' object in the bll)
   	   	 with the given pin numbers. Pin types are set within the bll.	*/
 application.invoke( new MessageWithObject( "pins:configure", {
-    potentiometers: {
-        require: "dryerpin",
+    dryerpintwo: {
+        require: "dryerpintwo",
         pins: {
-            a: { pin: 46 }, 
-			b: { pin: 45 }
+            c: { pin: 41 },
+			d: { pin: 42 }
         }
     },
-	accelerometer: {
-        require: "washerpin",
+    dryerpinone: {
+        require: "dryerpinone",
         pins: {
-            x: { pin: 48 }, 
-			y: { pin: 47 }
+            a: { pin: 43 },
+			b: { pin: 44 }
+        }
+    },
+	washerpintwo: {
+        require: "washerpintwo",
+        pins: {
+            y: { pin: 45 }, 
+			z: { pin: 46 }
+        }
+    },
+	washerpinone: {
+        require: "washerpinone",
+        pins: {
+            w: { pin: 47 }, 
+			x: { pin: 48 }
         }
     }
 }));
 
 /* Use the initialized analogSensor object and repeatedly 
    call its read method with a given interval.  */
-application.invoke( new MessageWithObject( "pins:/accelerometer/read?" + 
+application.invoke( new MessageWithObject( "pins:/dryerpintwo/read?" + 
 	serializeQuery( {
 		repeat: "on",
 		interval: 20,

@@ -21,15 +21,15 @@
 	<function id="configure" params="configuration"><![CDATA[
 		this.pinsSimulator = shell.delegate("addSimulatorPart", {
 			header : { 
-				label : "Washer One", 
-				name : "3 Analog Inputs", 
+				label : "Washer Two", 
+				name : "", 
 				iconVariant : PinsSimulators.SENSOR_SLIDER 
 			},
 			axes : [
 				new PinsSimulators.AnalogInputAxisDescription(
 					{
-						valueLabel : "Time left",
-						valueID : "x",
+						valueLabel : "Time remaining",
+						valueID : "y",
 						defaultControl : PinsSimulators.SLIDER,
 						speed : 0,
 						ioType : "input",
@@ -41,7 +41,7 @@
 				new PinsSimulators.DigitalInputAxisDescription(
 					{
 						valueLabel : "Currently in use",
-						valueID : "y",
+						valueID : "z",
 						defaultControl : PinsSimulators.BUTTON,
 						ioType : "input",
 						value : 0
@@ -65,8 +65,8 @@
 
 	<script><![CDATA[
 		exports.pins = {
-			x: { type: "A2D" },
-			y: { type: "Digital" }
+			y: { type: "A2D" },
+			z: { type: "Digital" }
 		};
 	]]></script>
 
