@@ -5,31 +5,31 @@ var redS = new Skin({fill:"red"});
 var orangeS = new Skin({fill:"orange"});
 
 
-washerTime = 0;
-washerInUse = 0;
-dryerTime = 0;
-dryerInUse = 0;
+washerTimeOne = 0;
+washerInUseOne = 0;
+washerTimeTwo = 0;
+washerInUseTwo = 0;
+dryerTimeOne = 0;
+dryerInUseOne = 0;
+dryerTimeTwo = 0;
+dryerInUseTwo = 0;
 paidForWasher = false;
 paidForDryer = false;
 
 deviceURL = "";
 
-Handler.bind("/getCount", Behavior({
+Handler.bind("/getAllInfo", Behavior({
 	onInvoke: function(handler, message){
 		var allData = new Object();
-		allData.washerTime = washerTime;
-		allData.washerInUse = washerInUse;
-		allData.dryerTime = dryerTime;
+		allData.washerTimeOne = washerTimeOne;
+		allData.washerInUseOne = washerInUseOne;
+		allData.washerTimeTwo = washerTimeTwo;
+		allData.washerInUseTwo = washerInUseTwo;
+		allData.dryerTimeOne = dryerTimeOne;
+		allData.washerInUseOne = washerInUseOne;
+		allData.dryerTimeTwo = dryerTimeTwo;
+		allData.washerInUseTwo = washerInUseTwo;
 		message.responseText = JSON.stringify(allData);
-		message.status = 200;
-	}
-}));
-
-Handler.bind("/reset", Behavior({
-	onInvoke: function(handler, message){
-		var allData = new Object();
-		addingMoreFood = true;
-		message.responseText = JSON.stringify({addingMoreFood: true});
 		message.status = 200;
 	}
 }));
@@ -40,7 +40,6 @@ Handler.bind("/gotAnalogResult", Object.create(Behavior.prototype, {
 			//Receives result and passes to main container.
             var result = message.requestObject;
             //result.y = 90;
-            //trace("\nHAHAH " + result.y);
     		application.distribute( "onAnalogValueChanged", result );
 		},
 	},
@@ -70,8 +69,8 @@ MainContainer.behaviors[0] = Behavior.template({
     		content.string = ""
     		sensor.skin = greenS;
 		}
-    	washerInUse = result.y.toFixed(2);
-    	dryerTime = result.y;*/
+    	washerInUseOne = result.y.toFixed(2);
+    	dryerTimeOne = result.y;*/
 	},
 })
 /* Create message for communication with hardware pins.
