@@ -13,8 +13,6 @@ dryerTimeOne = 0;
 dryerInUseOne = 0;
 dryerTimeTwo = 0;
 dryerInUseTwo = 0;
-paidForWasher = false;
-paidForDryer = false;
 
 deviceURL = "";
 
@@ -34,13 +32,15 @@ Handler.bind("/getAllInfo", Behavior({
 	}
 }));
 
-Handler.bind("/gotAnalogResult", Object.create(Behavior.prototype, {
+Handler.bind("/gotResult", Object.create(Behavior.prototype, {
 	onInvoke: { value:
 		function(handler, message) {
 			//Receives result and passes to main container.
             var result = message.requestObject;
             //result.y = 90;
-    		application.distribute( "onAnalogValueChanged", result );
+            //trace("\nOne " + result.c);
+            //trace("\nTwo " + result.w);
+			application.distribute( "onPinsChanged", result );
 		},
 	},
 }));
@@ -55,22 +55,20 @@ var MainContainer = Container.template(function($) {
 ], }});
 MainContainer.behaviors = new Array(1);
 MainContainer.behaviors[0] = Behavior.template({
-	onAnalogValueChanged: function(content,result) {
-    	/*washerTime = result.x.toFixed(2);
-    	if (washerTime < 15) {
-    		sensor.skin = redS;
-			content.string = "Food is low..."
-    		if (addingMoreFood) {
-    			sensor.skin = orangeS;
-    			content.string = "Adding more food..."
-			}
-		} else {
-			addingMoreFood = false;
-    		content.string = ""
-    		sensor.skin = greenS;
+	onPinsChanged: function(content,result) {
+        if (typeof result.c !== 'undefined') {
+			dryerTimeTwo = result.c;
+			dryerInUseTwo = result.d;
+		} else if (typeof result.a !== 'undefined') {
+			dryerTimeOne = result.a;
+			dryerInUseOne = result.b;
+		} else if (typeof result.y !== 'undefined') {
+			washerTimeTwo = result.y;
+			washerInUseTwo = result.z;
+		} else if (typeof result.w !== 'undefined') {
+        	washerTimeOne = result.w;
+			washerInUseOne = result.x;
 		}
-    	washerInUseOne = result.y.toFixed(2);
-    	dryerTimeOne = result.y;*/
 	},
 })
 /* Create message for communication with hardware pins.
@@ -115,7 +113,30 @@ application.invoke( new MessageWithObject( "pins:/dryerpintwo/read?" +
 	serializeQuery( {
 		repeat: "on",
 		interval: 20,
-		callback: "/gotAnalogResult"
+		callback: "/gotResult"
+})));
+
+application.invoke( new MessageWithObject( "pins:/dryerpinone/read?" + 
+	serializeQuery( {
+		repeat: "on",
+		interval: 20,
+		callback: "/gotResult"
+})));
+
+
+application.invoke( new MessageWithObject( "pins:/washerpintwo/read?" + 
+	serializeQuery( {
+		repeat: "on",
+		interval: 20,
+		callback: "/gotResult"
+})));
+
+
+application.invoke( new MessageWithObject( "pins:/washerpinone/read?" + 
+	serializeQuery( {
+		repeat: "on",
+		interval: 20,
+		callback: "/gotResult"
 })));
 
 application.add( new MainContainer() );
