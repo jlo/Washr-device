@@ -24,9 +24,9 @@ Handler.bind("/getAllInfo", Behavior({
 		allData.washerTimeTwo = washerTimeTwo;
 		allData.washerInUseTwo = washerInUseTwo;
 		allData.dryerTimeOne = dryerTimeOne;
-		allData.washerInUseOne = washerInUseOne;
+		allData.dryerInUseOne = dryerInUseOne;
 		allData.dryerTimeTwo = dryerTimeTwo;
-		allData.washerInUseTwo = washerInUseTwo;
+		allData.dryerInUseTwo = dryerInUseTwo;
 		message.responseText = JSON.stringify(allData);
 		message.status = 200;
 	}
