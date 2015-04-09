@@ -58,19 +58,19 @@ MainContainer.behaviors[0] = Behavior.template({
 	onPinsChanged: function(content,result) {
         if (typeof result.c !== 'undefined') {
         	//trace("\nOne: " + result.c);
-			dryerTimeTwo = result.c.toFixed(2);
+			dryerTimeTwo = result.c.toFixed(0);
 			dryerInUseTwo = result.d;
 		} else if (typeof result.a !== 'undefined') {
         	//trace("\nTwo: " + result.a);
-			dryerTimeOne = result.a.toFixed(2);
+			dryerTimeOne = result.a.toFixed(0);
 			dryerInUseOne = result.b;
 		} else if (typeof result.y !== 'undefined') {
         	//trace("\nThree: " + result.y);
-			washerTimeTwo = result.y.toFixed(2);
+			washerTimeTwo = result.y.toFixed(0);
 			washerInUseTwo = result.z;
 		} else if (typeof result.w !== 'undefined') {
         	//trace("\nFour: " + result.w);
-        	washerTimeOne = result.w.toFixed(2);
+        	washerTimeOne = result.w.toFixed(0);
 			washerInUseOne = result.x;
 		}
 	},
